@@ -1,6 +1,7 @@
 # Clean-Water-Crowdsourcing
 
- ## General
+## General
+
  
 Our project this semester supports the Georgia Tech Serve/Learn/Sustain program. More details on this program are at: external link: http://serve-learn-sustain.gatech.edu/welcome . It is loosely based on the NASA challenge here: external link: https://2015.spaceappschallenge.org/challenge/clean-water-mapping/
 
