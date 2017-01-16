@@ -1,6 +1,7 @@
 # Clean-Water-Crowdsourcing
 
  ## General
+ 
 Our project this semester supports the Georgia Tech Serve/Learn/Sustain program. More details on this program are at: external link: http://serve-learn-sustain.gatech.edu/welcome . It is loosely based on the NASA challenge here: external link: https://2015.spaceappschallenge.org/challenge/clean-water-mapping/
 
 Specifically, in our class, we will create an application that supports finding clean drinking water and reporting on testing results. In many parts of the world, access to clean water is a severe problem. Many times, water is available, but people do not know where to get it. Other times, water may appear clean, but has unacceptable levels of contaminants.
@@ -14,6 +15,7 @@ A normal application like this would be networked and have a database backend. F
 FOR THIS SEMESTER WE WILL DESIGN THE ENTIRE APPLICATION, HOWEVER WE WILL IMPLEMENT ONLY WHAT IS IN THE MILESTONES. You may implement other features and receive extra credit.
 
 ## Authorization Levels
+
 User
 The user has the most basic rights in the system. They may submit a report on water availability and they may view available water sources.
 
