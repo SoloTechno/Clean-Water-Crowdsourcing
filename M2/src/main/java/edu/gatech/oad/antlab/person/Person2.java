@@ -31,7 +31,7 @@ public class Person2 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-        List<Character> letters = new ArrayList<Character>();
+        List<Character> letters = new ArrayList<>();
         for (char singleChar:input.toCharArray()){
             letters.add(singleChar);
         }
