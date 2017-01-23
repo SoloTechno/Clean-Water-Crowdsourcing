@@ -1,6 +1,7 @@
 package edu.gatech.oad.antlab.person;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *  A simple class for person 2
  *  returns their name and a
