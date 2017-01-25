@@ -10,9 +10,9 @@ apply plugin: 'java'
 	}
 	
 	jar {
-    	manifest {
-        	attributes 'Implementation-Title': 'Gradle Quickstart',
-                   	   'Implementation-Version': version,
-                   	   'Main-Class': 'edu.gatech.oad.antlab.pkg1.AntLabMain'
-    	}
-	}
+    		manifest {
+        		attributes("Implementation-Title": "Gradle",
+                   		   "Implementation-Version": version,
+				   "Main-Class": "edu.gatech.oad.antlab.pkg1.AntLabMain"),
+    			 }
+	    }
