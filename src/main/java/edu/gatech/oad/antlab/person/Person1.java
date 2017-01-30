@@ -1,14 +1,14 @@
 package edu.gatech.oad.antlab.person;
 
 /**
- *  A simple class for person 5
+ *  A simple class for person 1
  *  returns their name and a
  *  modified string 
  *  
  *  @author Bob
  *  @version 1.1
  */
-public class Person5 {
+public class Person1 {
   /** Holds the persons real name */
   private String name;
   	/**
@@ -16,7 +16,7 @@ public class Person5 {
 	 * name
 	 * @param pname the person's real name
 	 */
-  public Person5(String pname) {
+  public Person1(String pname) {
     name = pname;
   }
   	/**
@@ -30,8 +30,16 @@ public class Person5 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 5 put your implementation here
-	  return null;
+	  //Person 1 put your implementation here
+	  String result = "";
+	  int len = input.length();
+
+	  int i = 2;
+	  while (len > 0) {
+	    result += input.charAt(i++ % input.length());
+	    len--;
+	  }
+	  return result;
 	}
 	
 	/**
