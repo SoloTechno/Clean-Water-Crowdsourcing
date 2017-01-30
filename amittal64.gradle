@@ -1,0 +1,19 @@
+//Set a default task
+defaultTasks   'jar'
+
+apply plugin: 'java'
+  
+	version = '1.0'
+  
+	dependencies {
+	    compile files('lib/resources.jar')
+	}
+	
+	jar {
+    		manifest {
+        		attributes("Implementation-Title": "Gradle",
+                   		   "Implementation-Version": version,
+				   "Main-Class": 'edu.gatech.oad.antlab.pkg1.AntLabMain',
+        			'Class-Path' : '../../lib/resources.jar')
+    			 }
+	    }
