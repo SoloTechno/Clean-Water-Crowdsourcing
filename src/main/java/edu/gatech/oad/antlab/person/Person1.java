@@ -36,7 +36,7 @@ public class Person1 {
 
 	  int i = 2;
 	  while (len > 0) {
-	    result += input.charAt(i++ % input.length);
+	    result += input.charAt(i++ % input.length());
 	    len--;
 	  }
 	  return result;
