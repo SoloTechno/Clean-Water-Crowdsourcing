@@ -7,7 +7,7 @@ version = '1.0'
 
 jar {
     manifest {
-        attributes  'Implementation-Title' : 'M2 gradle' ,
+        attributes  'Implementation-Title' : 'M2 gradle file' ,
                     'Implementation-Version' : version,
                     'Main-Class' : 'edu.gatech.oad.antlab.pkg1.AntLabMain',
                     'Class-Path' : '../../lib/resources.jar'
