@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "707544621029",
+    "firebase_url": "https://clean-water-crowdsourcin-47c4e.firebaseio.com",
+    "project_id": "clean-water-crowdsourcin-47c4e",
+    "storage_bucket": "clean-water-crowdsourcin-47c4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707544621029:android:6c0c00c2d646fbb5",
+        "android_client_info": {
+          "package_name": "com.example.timothybaba.m4_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707544621029-7fl2609mnuc78g6sflc5bn4m3bkmr20t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6nf6e-Otj1X7Hh6u9opbHix8tL3DSrzc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
