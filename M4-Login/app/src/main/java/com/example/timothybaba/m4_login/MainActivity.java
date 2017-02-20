@@ -6,9 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-/**
- * Created by Joshua on 2/12/2017.
- */
+
 
 public class MainActivity extends AppCompatActivity {
     private Button mLogoutButton;

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/first_Name">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/LastName">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:id="@+id/email" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/password">
+
+                    <TextView
+                        android:text="Account Type: "
+                        android:layout_width="164dp"
+                        android:layout_height="31dp"
+                        android:id="@+id/textView3" />
+
+                    <Spinner
+                        android:layout_width="251dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/spinner4" />
+
+                    <Button
+                        android:text="Save"
+                        android:layout_width="299dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/save_button" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="Password" />
+
+                </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:id="@+id/last_Name" />
+        </android.support.design.widget.TextInputLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:id="@+id/firstName" />
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>
