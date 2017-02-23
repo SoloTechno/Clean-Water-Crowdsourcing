@@ -1,4 +1,5 @@
 package com.gatech.edu.soloTechno.m4_login.controllers;
+import com.gatech.edu.soloTechno.m4_login.R;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity
             Intent logoutActivity = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(logoutActivity);
         } else if (id == R.id.nav_edit_profile) {
-            // when clicked edit profile, then redirects to login activity
+            Intent editProfileActivity = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(editProfileActivity);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
