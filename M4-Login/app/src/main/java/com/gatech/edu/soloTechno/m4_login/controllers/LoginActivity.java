@@ -1,4 +1,4 @@
-package com.example.timothybaba.m4_login;
+package com.gatech.edu.soloTechno.m4_login.controllers;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,6 +29,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.gatech.edu.soloTechno.m4_login.R;
 
 import java.util.ArrayList;
 import java.util.List;

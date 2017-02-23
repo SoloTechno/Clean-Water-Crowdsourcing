@@ -1,4 +1,4 @@
-package com.example.timothybaba.m4_login;
+package com.gatech.edu.soloTechno.m4_login.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import com.gatech.edu.soloTechno.m4_login.R;
 
 import java.util.Arrays;
 import java.util.List;

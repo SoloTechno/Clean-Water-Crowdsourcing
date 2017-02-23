@@ -1,4 +1,4 @@
-package com.example.timothybaba.m4_login;
+package com.gatech.edu.soloTechno.m4_login;
 
 import org.junit.Test;
 

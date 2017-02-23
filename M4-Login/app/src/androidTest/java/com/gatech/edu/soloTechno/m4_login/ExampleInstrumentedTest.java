@@ -1,4 +1,4 @@
-package com.example.timothybaba.m4_login;
+package com.gatech.edu.soloTechno.m4_login;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
