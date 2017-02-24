@@ -13,16 +13,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name="com.gatech.edu.soloTechno.m4_login.controllers.LoginActivity"
+            android:name="com.gatech.edu.soloTechno.m4_login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.gatech.edu.soloTechno.m4_login.controllers.MainActivity"></activity>
-        <activity android:name="com.gatech.edu.soloTechno.m4_login.controllers.RegisterActivity"></activity>
+        <activity
+            android:name="com.gatech.edu.soloTechno.m4_login.MainActivity"
+            android:label="MainActivity">
+        </activity>
+        <activity
+            android:name="com.gatech.edu.soloTechno.m4_login.RegisterActivity"
+            android:label="RegisterActivity">
+        </activity>
     </application>
 
 </manifest>
