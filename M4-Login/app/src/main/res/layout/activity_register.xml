@@ -35,7 +35,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="Password"
-                        android:id="@+id/password" />
+                        android:id="@+id/password"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        />
 
                 </android.support.design.widget.TextInputLayout>
                 <EditText
