@@ -21,11 +21,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.R.attr.name;
 
@@ -47,14 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword_text;
 
     /**
-     *
-     */
-    private FirebaseAuth auth;
-    public static final String TAG = RegisterActivity.class.getSimpleName();
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private ProgressDialog mAuthProgressDialog;
-
-    /**
      * variables to hold data retrieved from widgets
      */
     private String accountType;
@@ -67,6 +64,16 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validPassword;
     private boolean validFirstName;
     private boolean validLastName;
+
+    // firebase
+    private DatabaseReference mDatabase;
+    private String mUserId;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth mAuth;
+    public static final String TAG = RegisterActivity.class.getSimpleName();
+    private ProgressDialog mAuthProgressDialog;
+    private DatabaseReference myRootRef;
 
 
 
@@ -93,9 +100,48 @@ public class RegisterActivity extends AppCompatActivity {
         /**
          * Creates an object that accesses the tools provided in the Firebase Authentication SDK
          */
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        myRootRef = FirebaseDatabase.getInstance().getReference();
 
-        /**
+        if (mAuth.getCurrentUser() != null) {
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    lastName_text.setText((CharSequence) dataSnapshot.child("Last Name").getValue());
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                }
+            };
+            myRootRef.addValueEventListener(postListener);
+        }
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                mFirebaseUser = firebaseAuth.getCurrentUser();
+                if (mFirebaseUser != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + mFirebaseUser.getUid());
+                    email_text.setText(mFirebaseUser.getEmail());
+                    firstName_text.setText(mFirebaseUser.getDisplayName());
+
+//                    myRootRef.child()
+
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // [START_EXCLUDE]
+                // [END_EXCLUDE]
+            }
+        };
+
+
+            /**
          * Creates a save button and defines an on-click listener than calls the submitForm method
          * once the button is pressed
          */
@@ -113,9 +159,6 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, accounts);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountTypeSpinner.setAdapter(adapter);
-
-        createAuthStateListener();
-        createAuthProgressDialog();
 
     }
 
@@ -161,11 +204,12 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        createAuthProgressDialog();
         mAuthProgressDialog.show();
 
 
         //create user
-        auth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -178,8 +222,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            //Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                            //startActivity(intent);
                             Log.d(TAG, "Authentication successful");
                             createFirebaseUserProfile(task.getResult().getUser());
                         }
@@ -193,49 +235,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * informs the application if a user's account has been successfully authenticated or
-     * un-authenticated through Firebase
-     */
-    private void createAuthStateListener() {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference firstNameRef =  myRootRef.child("First Name");
-                    firstNameRef.setValue(firstName);
-                    DatabaseReference lastNameRef =  myRootRef.child("Last Name");
-                    lastNameRef.setValue(lastName);
-                    DatabaseReference accountTypeRef =  myRootRef.child("Account Type");
-                    accountTypeRef.setValue(accountType);
-
-
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    /**
-                     * @FLAG_ACTIVITY_CLEAR_TASK This flag Clears up all existing tasks associated
-                     * with RegisterActivity to prevent the RegisterActivity from being unnecessarily
-                     * accessed when the back butoton is pressed
-                     * @FLAG_ACTIVITY_NEW_TASK This flag makes the MainActivity begin a new task on
-                     * the stack
-                     */
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-        };
-    }
-
-    /**
      * Adds the authentication state listener to the Firebase Authentication object
      */
     @Override
     public void onStart() {
         super.onStart();
-        auth.addAuthStateListener(mAuthListener);
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     /**
@@ -245,7 +250,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-            auth.removeAuthStateListener(mAuthListener);
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
@@ -316,6 +321,14 @@ public class RegisterActivity extends AppCompatActivity {
                 .setDisplayName(firstName)
                 .build();
 
+        myRootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference firstNameRef =  myRootRef.child("First Name");
+        firstNameRef.setValue(firstName);
+        DatabaseReference lastNameRef =  myRootRef.child("Last Name");
+        lastNameRef.setValue(lastName);
+        DatabaseReference accountTypeRef =  myRootRef.child("Account Type");
+        accountTypeRef.setValue(accountType);
+
         user.updateProfile(addProfileName)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
 
@@ -328,24 +341,5 @@ public class RegisterActivity extends AppCompatActivity {
 
                 });
     }
-//});
-//        }
-//
-//        auth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(RegisterActivity.this, "Registered Successfully" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-//                            Intent saveActivity = new Intent(getApplicationContext(), MainActivity.class);
-//                            startActivity(saveActivity);
-//                        } else if (!task.isSuccessful()) {
-//                            Toast.makeText(RegisterActivity.this, "Nope Successfully" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-//                    }
-//                });
-//        Toast.makeText(getApplicationContext(), "You are successfully Registered !!", Toast.LENGTH_SHORT).show();
-//   }
 }
 
