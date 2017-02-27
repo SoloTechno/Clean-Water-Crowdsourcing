@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -86,7 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
         accountTypeSpinner.setAdapter(adapter);
 
         createAuthStateListener();
-<<<<<<< HEAD
         createAuthProgressDialog();
 
     }
@@ -98,15 +98,12 @@ public class RegisterActivity extends AppCompatActivity {
         mAuthProgressDialog.setCancelable(false);
     }
 
-=======
-    }
-
     /**
      * Private helper method to register the user through Firebase authentication. After user
      * submits information, method reads in email and password, calls the Firebase instance to
      * add new users to the system.
      */
->>>>>>> d6b2a70b557bec5a24eedeaaacb78aa5ee5527e3
+
     private void submitForm() {
 
         accountType = accountTypeSpinner.getSelectedItem().toString().trim();
@@ -131,11 +128,10 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
             return;
         }
-<<<<<<< HEAD
+
         mAuthProgressDialog.show();
 
-=======
->>>>>>> d6b2a70b557bec5a24eedeaaacb78aa5ee5527e3
+
         //create user
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -153,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             //startActivity(intent);
                             Log.d(TAG, "Authentication successful");
-
+                            createFirebaseUserProfile(task.getResult().getUser());
                         }
                     }
                 });
@@ -199,7 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
             auth.removeAuthStateListener(mAuthListener);
         }
     }
-<<<<<<< HEAD
+
 
     private boolean isValidEmail(String email) {
         boolean isGoodEmail =
@@ -234,6 +230,25 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private void createFirebaseUserProfile(final FirebaseUser user) {
+
+        UserProfileChangeRequest addProfileName = new UserProfileChangeRequest.Builder()
+                .setDisplayName(firstName)
+                .build();
+
+        user.updateProfile(addProfileName)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, user.getDisplayName());
+                        }
+                    }
+
+                });
+    }
 //});
 //        }
 //
@@ -252,8 +267,6 @@ public class RegisterActivity extends AppCompatActivity {
 //                    }
 //                });
 //        Toast.makeText(getApplicationContext(), "You are successfully Registered !!", Toast.LENGTH_SHORT).show();
-//    }
+//   }
 }
-=======
-}
->>>>>>> d6b2a70b557bec5a24eedeaaacb78aa5ee5527e3
+
