@@ -59,6 +59,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    /**
+     * Creates an instance of Firebase authentication
+     */
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -66,7 +69,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        /**
+         * Assigns an instance of Firebase authentication
+         */
         mAuth = FirebaseAuth.getInstance();
 
         // Set up the login form.
@@ -97,6 +102,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        /**
+         * Checks the current state of the user. Whether the user is still signed in or not
+         */
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -224,6 +232,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Shows the progress UI and hides the login form.
+     * @param show boolean whether it shows or not
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -292,8 +301,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
+    /**
+     * Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+     * @param emailAddressCollection a collection of email address
+     */
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
@@ -326,6 +338,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    /**
+     * Signs in using the email and password that the user inputted. It uses Firebase
+     * authentication to check whether the email and password the user inputted is valid and stored
+     * in the authentication base.
+     * @param email email the user typed in
+     * @param password password the user typed in
+     */
     private void signIn(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
