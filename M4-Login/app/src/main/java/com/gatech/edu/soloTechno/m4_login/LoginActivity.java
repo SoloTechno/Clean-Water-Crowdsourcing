@@ -131,6 +131,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
+    /*
+    * populates auto completion
+    *
+    * */
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -139,6 +143,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getLoaderManager().initLoader(0, null, this);
     }
 
+    /*
+    * check if user can request contact
+    *
+    * @return boolean
+    * */
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -223,11 +232,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    /*
+    * check if the email is valid
+    *
+    * @param email an email of user
+    *
+    * */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
+    /*
+    * check if the password is valid
+    *
+    * @param password a password of user
+    *
+    * */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;

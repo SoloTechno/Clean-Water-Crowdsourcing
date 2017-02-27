@@ -141,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
         };
 
 
-            /**
+        /**
          * Creates a save button and defines an on-click listener than calls the submitForm method
          * once the button is pressed
          */
