@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /**
+         * Displays a welcome message to the AppBar once a user is successfully logged in.
+         */
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -70,7 +73,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_logout) {
+            /**
+             * Uses firebase built-in signout method to a sign out users of their current session
+             */
             FirebaseAuth.getInstance().signOut();
+
             Intent logoutActivity = new Intent(getApplicationContext(), LoginActivity.class);
             logoutActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logoutActivity);
