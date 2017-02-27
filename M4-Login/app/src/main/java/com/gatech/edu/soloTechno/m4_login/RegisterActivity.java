@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -98,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
          * Creates a save button and defines an on-click listener than calls the submitForm method
          * once the button is pressed
          */
+
         final Button saveButton = (Button) findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -183,6 +185,11 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -196,7 +203,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
                     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference firstNameRef =  myRootRef.child("First Name");
                     firstNameRef.setValue(firstName);
