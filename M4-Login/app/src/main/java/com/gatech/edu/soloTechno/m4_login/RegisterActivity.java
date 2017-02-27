@@ -76,12 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
         password_text = (EditText) findViewById(R.id.password);
         confirmPassword_text = (EditText) findViewById(R.id.confirm_Password);
 
-        auth = FirebaseAuth.getInstance();
-
-        FirebaseUser user = auth.getCurrentUser();
-//        firstName_text.setText(user.);
-
-
         final Button saveButton = (Button) findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -159,6 +153,11 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void createAuthStateListener() {
@@ -168,7 +167,6 @@ public class RegisterActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
                     DatabaseReference myRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference firstNameRef =  myRootRef.child("First Name");
                     firstNameRef.setValue(firstName);
@@ -176,12 +174,6 @@ public class RegisterActivity extends AppCompatActivity {
                     lastNameRef.setValue(lastName);
                     DatabaseReference accountTypeRef =  myRootRef.child("Account Type");
                     accountTypeRef.setValue(accountType);
-
-
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
                 }
             }
 
