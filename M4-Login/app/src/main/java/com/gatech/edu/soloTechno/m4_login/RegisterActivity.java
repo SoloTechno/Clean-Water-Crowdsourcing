@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +50,11 @@ public class RegisterActivity extends AppCompatActivity {
         password_text = (EditText) findViewById(R.id.password);
 
         auth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = auth.getCurrentUser();
+//        firstName_text.setText(user.);
+
+
         final Button saveButton = (Button) findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
