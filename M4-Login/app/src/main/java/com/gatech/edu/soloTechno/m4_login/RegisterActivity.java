@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     public static List<String> accounts = Arrays.asList("Manager", "Worker", "Admin", "User");
 
 
-
+    @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_register);
@@ -81,14 +81,12 @@ public class RegisterActivity extends AppCompatActivity {
                 submitForm();
             }
         });
-
-
-
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, accounts);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountTypeSpinner.setAdapter(adapter);
 
         createAuthStateListener();
+<<<<<<< HEAD
         createAuthProgressDialog();
 
     }
@@ -100,6 +98,15 @@ public class RegisterActivity extends AppCompatActivity {
         mAuthProgressDialog.setCancelable(false);
     }
 
+=======
+    }
+
+    /**
+     * Private helper method to register the user through Firebase authentication. After user
+     * submits information, method reads in email and password, calls the Firebase instance to
+     * add new users to the system.
+     */
+>>>>>>> d6b2a70b557bec5a24eedeaaacb78aa5ee5527e3
     private void submitForm() {
 
         accountType = accountTypeSpinner.getSelectedItem().toString().trim();
@@ -124,8 +131,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
             return;
         }
+<<<<<<< HEAD
         mAuthProgressDialog.show();
 
+=======
+>>>>>>> d6b2a70b557bec5a24eedeaaacb78aa5ee5527e3
         //create user
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -147,7 +157,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     private void createAuthStateListener() {
@@ -190,6 +199,7 @@ public class RegisterActivity extends AppCompatActivity {
             auth.removeAuthStateListener(mAuthListener);
         }
     }
+<<<<<<< HEAD
 
     private boolean isValidEmail(String email) {
         boolean isGoodEmail =
@@ -244,3 +254,6 @@ public class RegisterActivity extends AppCompatActivity {
 //        Toast.makeText(getApplicationContext(), "You are successfully Registered !!", Toast.LENGTH_SHORT).show();
 //    }
 }
+=======
+}
+>>>>>>> d6b2a70b557bec5a24eedeaaacb78aa5ee5527e3
