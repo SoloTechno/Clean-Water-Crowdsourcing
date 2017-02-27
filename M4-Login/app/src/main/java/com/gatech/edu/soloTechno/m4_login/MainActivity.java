@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,8 +53,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
             Intent logoutActivity = new Intent(getApplicationContext(), LoginActivity.class);
+            logoutActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logoutActivity);
+            finish();
         } else if (id == R.id.nav_edit_profile) {
             Intent editProfileActivity = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(editProfileActivity);
