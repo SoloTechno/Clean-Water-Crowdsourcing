@@ -1,5 +1,6 @@
 package com.gatech.edu.soloTechno.m4_login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,15 +38,22 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText lastName_text;
     private EditText email_text;
     private EditText password_text;
+    private EditText confirmPassword_text;
     private FirebaseAuth auth;
     public static final String TAG = RegisterActivity.class.getSimpleName();
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressDialog mAuthProgressDialog;
 
     private String accountType;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
+    private String confirmPassword;
+    private boolean validEmail;
+    private boolean validPassword;
+    private boolean validFirstName;
+    private boolean validLastName;
 
 
 
@@ -64,6 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
         lastName_text = (EditText) findViewById(R.id.last_Name);
         email_text = (EditText) findViewById(R.id.email);
         password_text = (EditText) findViewById(R.id.password);
+        confirmPassword_text = (EditText) findViewById(R.id.confirm_Password);
 
         auth = FirebaseAuth.getInstance();
         final Button saveButton = (Button) findViewById(R.id.save_button);
@@ -80,8 +89,17 @@ public class RegisterActivity extends AppCompatActivity {
         accountTypeSpinner.setAdapter(adapter);
 
         createAuthStateListener();
+        createAuthProgressDialog();
 
     }
+
+    private void createAuthProgressDialog() {
+        mAuthProgressDialog = new ProgressDialog(this);
+        mAuthProgressDialog.setTitle("Loading...");
+        mAuthProgressDialog.setMessage("Authenticating with Firebase...");
+        mAuthProgressDialog.setCancelable(false);
+    }
+
     private void submitForm() {
 
         accountType = accountTypeSpinner.getSelectedItem().toString().trim();
@@ -89,6 +107,13 @@ public class RegisterActivity extends AppCompatActivity {
         password = password_text.getText().toString().trim();
         firstName = firstName_text.getText().toString().trim();
         lastName = lastName_text.getText().toString().trim();
+        confirmPassword = confirmPassword_text.getText().toString().trim();
+        validEmail = isValidEmail(email);
+        validFirstName = isValidName(firstName);
+        validLastName = isValidName(lastName);
+        validPassword = isValidPassword(password, confirmPassword);
+
+        if (!validEmail || !validFirstName || !validLastName || !validPassword) return;
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -99,12 +124,15 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
             return;
         }
+        mAuthProgressDialog.show();
 
         //create user
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        mAuthProgressDialog.dismiss();
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -140,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                 }
@@ -160,6 +189,40 @@ public class RegisterActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             auth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+    private boolean isValidEmail(String email) {
+        boolean isGoodEmail =
+                (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches());
+        if (!isGoodEmail) {
+            email_text.setError("Please enter a valid email address");
+            return false;
+        }
+        return isGoodEmail;
+    }
+
+    private boolean isValidName(String name) {
+        if (name.equals("")) {
+            if (name.equals(firstName_text.getText().toString().trim())) {
+                firstName_text.setError("Please enter your name");
+            } else {
+                lastName_text.setError("Please enter your name");
+            }
+
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidPassword(String password, String confirmPassword) {
+        if (password.length() < 6) {
+            password_text.setError("Please create a password containing at least 6 characters");
+            return false;
+        } else if (!password.equals(confirmPassword)) {
+            password_text.setError("Passwords do not match");
+            return false;
+        }
+        return true;
     }
 //});
 //        }

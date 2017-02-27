@@ -15,31 +15,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <android.support.design.widget.TextInputLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <Spinner
-                        android:layout_width="251dp"
-                        android:layout_height="36dp"
-                        android:id="@+id/spinner4" />
 
-                    <Button
-                        android:text="Save"
-                        android:layout_width="367dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/save_button" />
 
+                    <android.support.design.widget.TextInputLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <Spinner
+                            android:layout_width="251dp"
+                            android:layout_height="36dp"
+                            android:id="@+id/spinner4" />
+
+                        <Button
+                            android:text="Save"
+                            android:layout_width="367dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/save_button" />
+
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="Confirm Password"
+                            android:id="@+id/confirm_Password"
+                            android:imeOptions="actionUnspecified"
+                            android:inputType="textPassword"
+                            android:maxLines="1"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:hint="Password"
                         android:id="@+id/password"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
-                        android:maxLines="1"
-                        />
+                        android:maxLines="1"/>
 
                 </android.support.design.widget.TextInputLayout>
                 <EditText
