@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validPassword;
     private boolean validFirstName;
     private boolean validLastName;
+    private boolean edit = false;
 
     // firebase
     private DatabaseReference mDatabase;
@@ -213,25 +214,55 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+
+
         createAuthProgressDialog();
         mAuthProgressDialog.show();
 
 
-        //create user
-        mAuth.createUserWithEmailAndPassword(email, password)
+        if(mAuth.getCurrentUser() != null){
+            mAuth.getCurrentUser().updatePassword(confirmPassword);
+        } else {
+            //create user
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            mAuthProgressDialog.dismiss();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d(TAG, "Authentication successful");
+                                createFirebaseUserProfile(task.getResult().getUser());
+                            }
+                        }
+                    });
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        mAuthProgressDialog.dismiss();
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
+                            Toast.makeText(RegisterActivity.this, "Log in failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
+<<<<<<< HEAD
                             Log.d(TAG, "Authentication successful");
+=======
+                            // Sign user in with email
+                            Log.d(TAG, "Log in successful");
+                            //    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                            //   startActivity(mainActivity);
+>>>>>>> d9a8e81a072528dc447973102a344f1435d859f8
                         }
                     }
                 });
