@@ -129,11 +129,16 @@ public class RegisterActivity extends AppCompatActivity {
                     email_text.setText(mFirebaseUser.getEmail());
                     firstName_text.setText(mFirebaseUser.getDisplayName());
 
-                    // We move to to the Main Activity only when we validate the user has been created
+                    // We move to to the Main Activity only when we validate the user has been
+                    // created iin firebase
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
+
+                    // We only populate the database with the user's info when we validate the user
+                    // has been successfully created in firebase
+                    createFirebaseUserProfile(mFirebaseUser);
 
                 } else {
                     // User is signed out
@@ -227,7 +232,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d(TAG, "Authentication successful");
-                            createFirebaseUserProfile(task.getResult().getUser());
                         }
                     }
                 });
