@@ -129,7 +129,11 @@ public class RegisterActivity extends AppCompatActivity {
                     email_text.setText(mFirebaseUser.getEmail());
                     firstName_text.setText(mFirebaseUser.getDisplayName());
 
-//                    myRootRef.child()
+                    // We move to to the Main Activity only when we validate the user has been created
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
 
                 } else {
                     // User is signed out
@@ -227,11 +231,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
     /**
