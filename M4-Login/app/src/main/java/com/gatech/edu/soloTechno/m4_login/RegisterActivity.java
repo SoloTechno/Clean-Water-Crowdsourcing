@@ -235,6 +235,25 @@ public class RegisterActivity extends AppCompatActivity {
                     });
         }
 
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Log in failed." + task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Sign user in with email
+                            Log.d(TAG, "Log in successful");
+                            //    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                            //   startActivity(mainActivity);
+                        }
+                    }
+                });
+
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
