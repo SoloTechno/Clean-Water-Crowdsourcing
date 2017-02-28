@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validPassword;
     private boolean validFirstName;
     private boolean validLastName;
+    private boolean edit = false;
 
     // firebase
     private DatabaseReference mDatabase;
@@ -204,29 +205,35 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+
+
         createAuthProgressDialog();
         mAuthProgressDialog.show();
 
 
-        //create user
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if(mAuth.getCurrentUser() != null){
+            mAuth.getCurrentUser().updatePassword(confirmPassword);
+        } else {
+            //create user
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        mAuthProgressDialog.dismiss();
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d(TAG, "Authentication successful");
-                            createFirebaseUserProfile(task.getResult().getUser());
+                            mAuthProgressDialog.dismiss();
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d(TAG, "Authentication successful");
+                                createFirebaseUserProfile(task.getResult().getUser());
+                            }
                         }
-                    }
-                });
+                    });
+        }
 
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
